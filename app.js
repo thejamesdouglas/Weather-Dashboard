@@ -25,7 +25,7 @@ function getWeather(cityName) {
         })
         .then(data => {
             const { lat, lon } = data.coord;
-            const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+            const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 
             fetch(weatherUrl)
                 .then(response => {
@@ -45,7 +45,6 @@ function getWeather(cityName) {
         });
 }
 
-// Functions to display weather data and manage search history - all code before this point is framework
 function displayCurrentWeather(data) {
     const today = new Date().toLocaleDateString();
     const currentWeatherData = data.list.find(item => {
@@ -61,9 +60,9 @@ function displayCurrentWeather(data) {
     const html = `
         <div class="current-weather-info">
             <h2>${name} (${date}) <img src="${iconUrl}" alt="${weather[0].description}" /></h2>
-            <p>Temperature: ${main.temp} °C</p>
+            <p>Temperature: ${main.temp} °F</p>
+            <p>Wind Speed: ${wind.speed} mph</p>
             <p>Humidity: ${main.humidity} %</p>
-            <p>Wind Speed: ${wind.speed} m/s</p>
         </div>
 `;
 
@@ -98,8 +97,8 @@ function displayForecast(data) {
             <div class="forecast-item">
                 <h3>${date}</h3>
                 <img src="${iconUrl}" alt="${weather[0].description}" />
-                <p>Temp: ${main.temp} °C</p>
-                <p>Wind: ${wind.speed} m/s</p>
+                <p>Temp: ${main.temp} °F</p>
+                <p>Wind: ${wind.speed} mph</p>
                 <p>Humidity: ${main.humidity} %</p>
             </div>
         `;
